@@ -8,14 +8,14 @@
 /* don't forget to set up your search path - in psql, do: */
 set search_path to project2;
 
-/* This next query lists all of the pioneers and related info. */
-SELECT * FROM people;
+-- What is Radia Perlman known for?
+SELECT known_for FROM pioneers WHERE last = 'Perlman' and first = 'Radia';
 
-/* This query returns a count of all the pioneers; here we are using */
-/* an aggregate function (COUNT), which we will look at in a future lecture. */
-SELECT COUNT(*) FROM people;
+-- Where did Alan Turing attend University, and what was the highest degree he obtained?
+SELECT school, degree FROM pioneers WHERE last = 'Turing' and first = 'Alan';
 
-/* Please delete the queries above and replace with your queries for       */
-/* project2!                                                               */
+-- Which pioneers (first and last name) were born before 1700?
+SELECT first, last FROM pioneers WHERE birth < 1700;
 
--- Note you can also do single-line comments this way
+-- Where is the school Ensimag located (city and country)?
+SELECT city, country FROM schools WHERE name = 'Ensimag';
