@@ -174,9 +174,79 @@ WHERE
 
 -- Question 13
 SELECT
-    *
+    schools.name,
+    lynn.degree,
+    awards.name
 FROM
-    pioneers
+    (
+        SELECT
+            id,
+            school_id,
+            degree
+        FROM
+            pioneers
+        WHERE
+            first = 'Lynn'
+            AND last = 'Conway'
+    ) as lynn,
+    schools,
+    pioneers_awards_xref,
+    awards
 WHERE
-    first = 'Lynn'
-    AND last = 'Conway';
+    schools.id = lynn.school_id
+    AND pioneers_awards_xref.pioneer_id = lynn.id
+    AND pioneers_awards_xref.award_id = awards.id;
+
+-- Question 14
+SELECT
+    first,
+    last,
+    schools.name
+FROM
+    pioneers,
+    schools,
+    (
+        SELECT
+            pioneer_id,
+            COUNT(award_id) as count
+        FROM
+            pioneers_awards_xref
+        GROUP BY
+            pioneer_id
+    ) as award_counts
+WHERE
+    pioneers.school_id = schools.id
+    AND pioneers.country = schools.country
+    AND pioneers.id = award_counts.pioneer_id
+    AND award_counts.count = 2;
+
+-- Bonus
+SELECT
+    first,
+    last,
+    schools.name
+FROM
+    pioneers,
+    schools,
+    (
+        SELECT
+            name
+        FROM
+            (
+                SELECT
+                    first as name,
+                    COUNT(id)
+                FROM
+                    pioneers
+                GROUP BY
+                    name
+            ) as name_counts
+        WHERE
+            name_counts.count = 3
+    ) as shared_firsts
+WHERE
+    pioneers.first = shared_firsts.name
+    AND pioneers.school_id = schools.id
+ORDER BY
+    first,
+    last;
