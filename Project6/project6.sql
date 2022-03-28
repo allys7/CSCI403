@@ -88,13 +88,17 @@ CREATE TABLE business_type (
     FOREIGN KEY (business_id) REFERENCES business(id)
 );
 
-CREATE VIEW reviewer_view AS 
+/* ----- EXTRA CREDIT ----- */
+CREATE VIEW reviewer_view AS
 SELECT
-    reviewer.screen_name, reviewer.indentity_provider, views.sum
+    reviewer.screen_name,
+    reviewer.indentity_provider,
+    views.sum
 FROM
     (
         SELECT
-            reviewer_name, reviewer_provider,
+            reviewer_name,
+            reviewer_provider,
             SUM(views)
         FROM
             reviews
