@@ -1,0 +1,98 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+\begin{center}
+    {\bf \large Project 7 -}
+    Ally Smith
+\end{center}
+
+{\noindent \textbf{Schema:}}
+
+\vspace{.1in}
+$R =$ \{composer, era, era\_dates, birthplace, continent, work, setting\}
+\vspace{.1in}
+
+
+{\noindent \textbf{Dependencies:}}
+
+\vspace{.1in}
+\begin{tabular*}{4in}{r c l}
+    \{composer\} &$\to$& \{birthplace\} \\
+    \{composer, work\} &$\to$& \{setting\} \\
+    \{era\} &$\to$& \{era\_dates\} \\
+    \{birthplace\} &$\to$& \{continent\} \\
+\end{tabular*}
+
+\section*{Step 1}
+\begin{enumerate}
+    \item Starting relation: $R$
+    \item Decompose on \{birthplace\} $\to$ \{continent\}
+    \item Results:
+
+    \begin{tabular*}{4in}{r l}
+        $R1$ =& \{composer, era, era\_dates, birthplace, work, setting\} \\
+        $R2$ =& \{birthplace, continent\} \\
+    \end{tabular*}
+\end{enumerate}
+
+\section*{Step 2}
+\begin{enumerate}
+    \item Starting relation: $R1$
+    \item Decompose on \{composer\} $\to$ \{birthplace\}
+    \item Results:
+
+    \begin{tabular*}{4in}{r l}
+        $R3$ =& \{composer, era, era\_dates, work, setting\} \\
+        $R4$ =& \{composer, birthplace\} \\
+    \end{tabular*}
+\end{enumerate}
+
+\section*{Step 3}
+\begin{enumerate}
+    \item Starting relation: $R3$
+    \item Decompose on \{era\} $\to$ \{era\_dates\}
+    \item Results:
+
+    \begin{tabular*}{4in}{r l}
+        $R5$ =& \{composer, era, work, setting\} \\
+        $R6$ =& \{era, era\_dates\} \\
+    \end{tabular*}
+\end{enumerate}
+\clearpage
+\section*{Step 4}
+\begin{enumerate}
+    \item Starting relation: $R5$
+    \item Decompose on \{composer, work\} $\to$ \{setting\}
+    \item Results:
+
+    \begin{tabular*}{4in}{r l}
+        $R7$ =& \{composer, era, work\} \\
+        $R8$ =& \{composer, work, setting\} \\
+    \end{tabular*}
+\end{enumerate}
+
+
+\section*{Extra Credit}
+\begin{enumerate}
+    \item Starting relation: $R7$
+    \item Decompose on \{composer\} $\twoheadrightarrow$ \{era $|$ work\}
+    \item Results:
+    
+    \begin{tabular*}{4in}{r l}
+        $R9$ =& \{composer, era\} \\
+        $R10$ =& \{composer, work\} \\
+    \end{tabular*}
+\end{enumerate}
+
+\section*{Final Database}
+\begin{itemize}
+    \item $R2 =$ \{birthplace, continent\}, only FD is \{birthplace\} $\to$ \{continent\}
+    \item $R4 =$ \{composer, birthplace\}, only FD is \{composer\} $\to$ \{birthplace\}
+    \item $R6 =$ \{era, era\_dates\}, only FD is \{era\} $\to$ \{era\_dates\}
+    \item $R8 =$ \{composer, work, setting\}, only FD is \\\{composer, work\} $\to$ \{setting\}
+    \item $R9 =$ \{composer, era\}, only FD is \{composer\} $\twoheadrightarrow$ \{era\}
+    \item $R10 =$ \{composer, work\}, only FD is \{composer\} $\twoheadrightarrow$ \{work\}
+\end{itemize}
+\end{document}
