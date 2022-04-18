@@ -15,8 +15,11 @@
 import getpass
 import pg8000
 
-login = input('login: ')
-secret = getpass.getpass('password: ')
+# TODO: undo
+# login = input('login: ')
+# secret = getpass.getpass('password: ')
+login = "cksmith"
+secret = "Za7!7vS8G2yF"
 
 credentials = {'user'    : login, 
                'password': secret, 
@@ -38,24 +41,24 @@ cursor = db.cursor()
 
 # immediate SELECT
 cursor.execute(
-   """SELECT course_id, section, title 
-      FROM mines_courses 
-      WHERE instructor = 'Painter-Wakefield, Christopher'"""
+   """SELECT artist, title
+      FROM public.music
+      WHERE year = 2000"""
 )
 
 results = cursor.fetchall()
 for row in results:
-    course_id, section, title = row
-    print(course_id, section, title)
+    artist, title = row
+    print(artist, title)
 print()
 
 # prepared SELECT
-faculty = input('Enter faculty as lastname, firstname: ')
+course_input = input('Enter course as ABCD###: ')
 query = """SELECT course_id, section, title 
-           FROM mines_courses 
+           FROM mines_courses
            WHERE instructor LIKE %s"""  
 
-cursor.execute(query, ('%%' + faculty + '%%',))
+cursor.execute(query, (course_input,))
 
 results = cursor.fetchall()
 for row in results:
@@ -63,7 +66,7 @@ for row in results:
     print(course_id, section, title)
 
 # DDL code
-query = "CREATE TABLE foo (x text PRIMARY KEY)"
+query = "CREATE TABLE birds (name TEXT PRIMARY KEY, weight INTEGER, date_spotted DATE)"
 try:
     cursor.execute(query)
 except pg8000.Error as e:
@@ -71,9 +74,9 @@ except pg8000.Error as e:
     db.rollback() # necessary after error, unless autocommitting
     
 # modification queries with exception handling
-query = "INSERT INTO foo VALUES (%s)"
+query = "INSERT INTO birds VALUES (%s)"
 try:
-    cursor.execute(query, ('testing 1 2 3',))
+    cursor.execute(query, ('Bluejay', 14, '12-14-1998'))
     db.commit()
 except pg8000.Error as e:
     print('Database error: ', e)
@@ -81,7 +84,7 @@ except pg8000.Error as e:
 
 # second time should cause an integrity constraint violation
 try:
-    cursor.execute(query, ('testing 1 2 3',))
+    cursor.execute(query, ('Bluejay', 14, '12-14-1998'))
     db.commit()
 except pg8000.Error as e:
     print('Database error: ', e)

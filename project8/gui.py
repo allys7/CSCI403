@@ -290,13 +290,12 @@ class Application:
 ############################
 # application startup code #
 ############################
-if __name__ == "__main__":
-    lw = Tk()
-    lwapp = LoginWindow(lw)
-    lw.mainloop()
+lw = Tk()
+lwapp = LoginWindow(lw)
+lw.mainloop()
 
-    window = Tk()
-    app = Application(window, lwapp.db)
-    window.mainloop()
+window = Tk()
+app = Application(window, lwapp.db)
+window.mainloop()
 
 
