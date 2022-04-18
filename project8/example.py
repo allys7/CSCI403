@@ -15,11 +15,8 @@
 import getpass
 import pg8000
 
-# TODO: undo
-# login = input('login: ')
-# secret = getpass.getpass('password: ')
-login = "cksmith"
-secret = "Za7!7vS8G2yF"
+login = input('login: ')
+secret = getpass.getpass('password: ')
 
 credentials = {'user'    : login, 
                'password': secret, 

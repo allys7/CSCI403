@@ -320,4 +320,5 @@ TSWLatexianTemp*
 
 # python env
 .venv/
+.env/
 .vscode/
